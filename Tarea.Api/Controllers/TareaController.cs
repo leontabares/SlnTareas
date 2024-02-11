@@ -63,13 +63,13 @@ namespace Tarea.Api.Controllers
 
 
         [HttpGet("{id}")]
-        public async Task<DataResponse<TareaDTO>> Get(Guid id)
+        public async Task<DataResponse<TareaDTO>> Get(string id)
         {
             objResponse = new();
             try
             {
-                
-                var rta = await _queryService.GetAsync(id);
+                Guid idGuid = Guid.Parse(id);
+                var rta = await _queryService.GetAsync(idGuid);
                 if (rta is not null)
                 {
                     List<TareaDTO> lstTareas = [];
