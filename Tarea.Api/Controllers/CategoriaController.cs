@@ -23,8 +23,9 @@ namespace Tarea.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<DataCollection<CategoriaDTO>> GetAll(int page = 1, int take = 10, string ids = null)
+        public async Task<IEnumerable<CategoriaDTO>> GetAll(int page = 1, int take = 10, string ids = null)
         {
+            IEnumerable<CategoriaDTO> objGetAll;
             try
             {
                 IEnumerable<Guid>? categorias = null;
@@ -33,29 +34,44 @@ namespace Tarea.Api.Controllers
                     categorias = (IEnumerable<Guid>?)ids.Split(',').Select(x => Convert.ToInt32(x));
                 }
 
-                return await _queryService.GetAllAsync(page, take, categorias);
+                var rta = await _queryService.GetAllAsync(page, take, categorias);
+
+                if (rta.Items.Any())
+                {
+                    objGetAll = rta.Items;
+                }
+                else
+                {
+                    objGetAll = null;
+                }
+
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
-                throw;
+                objGetAll = null;
             }
+
+            return objGetAll;
         }
 
 
         [HttpGet("{id}")]
         public async Task<CategoriaDTO> Get(Guid id)
         {
+            CategoriaDTO objRta = null;
             try
             {
-                return await _queryService.GetAsync(id);
+                objRta = await _queryService.GetAsync(id);
+                
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
-                throw;
+                objRta = null;
             }
-            
+            return objRta;
+
         }
 
         [HttpPost]

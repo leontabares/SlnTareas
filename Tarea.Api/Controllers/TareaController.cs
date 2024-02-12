@@ -26,9 +26,9 @@ namespace Tarea.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<DataCollection<TareaDTO>> GetAll(int page = 1, int take = 10, string ids = null)
+        public async Task<IEnumerable<TareaDTO>> GetAll(int page = 1, int take = 10, string ids = null)
         {
-            DataCollection<TareaDTO> objGetAll = new();
+            IEnumerable<TareaDTO> objGetAll;
             try
             {
                 IEnumerable<Guid>? categorias = null;
@@ -41,21 +41,17 @@ namespace Tarea.Api.Controllers
 
                 if (rta.Items.Any())
                 {
-                    objGetAll = rta;
-                    objGetAll.IdMessage = EnumMessagesResponse.EnumResponse.Ok.GetHashCode().ToString();
-                    objGetAll.BodyResponseMessage = EnumMessagesResponse.EnumResponse.Ok.GetDisplayName();
+                    objGetAll = rta.Items;
                 }
                 else
                 {
-                    objGetAll.IdMessage = EnumMessagesResponse.EnumResponse.NoContent.GetHashCode().ToString();
-                    objGetAll.BodyResponseMessage = EnumMessagesResponse.EnumResponse.NoContent.GetDisplayName();                    
+                    objGetAll = null;
                 }                
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
-                objGetAll.IdMessage = EnumMessagesResponse.EnumResponse.Err.GetHashCode().ToString();
-                objGetAll.BodyResponseMessage = EnumMessagesResponse.EnumResponse.Err.GetDisplayName();
+                objGetAll = null;
             }
 
             return objGetAll;

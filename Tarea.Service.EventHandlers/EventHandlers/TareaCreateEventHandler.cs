@@ -20,11 +20,11 @@ namespace Tarea.Service.EventHandlers.EventHandlers
             if (!exist) {
                 await _context.AddAsync(new TareaModel
                 {
-                    IdTarea = command.IdTarea,
+                    IdTarea = Guid.Parse(command.IdTarea),
                     Descripcion = command.Descripcion,
                     Finalizada = command.Finalizada,
-                    Fecha = command.Fecha,
-                    Categoria = command.IdCategoria
+                    Fecha = Convert.ToDateTime(command.Fecha),
+                    Categoria = Guid.Parse(command.IdCategoria)
                 });
 
                 await _context.SaveChangesAsync();
