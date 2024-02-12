@@ -26,7 +26,7 @@ namespace Tarea.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<TareaDTO>> GetAll(int page = 1, int take = 10, string ids = null)
+        public async Task<IEnumerable<TareaDTO>> GetAll(int page = 1, int take = 50, string ids = null)
         {
             IEnumerable<TareaDTO> objGetAll;
             try
