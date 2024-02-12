@@ -123,7 +123,7 @@ namespace Tarea.Api.Controllers
             return objResponse;
         }
 
-        [HttpDelete]
+        [HttpPut("Eliminar")]
         public async Task<DataResponse<TareaDTO>> Delete(TareaDeleteCommand command)
         {
             objResponse = new();

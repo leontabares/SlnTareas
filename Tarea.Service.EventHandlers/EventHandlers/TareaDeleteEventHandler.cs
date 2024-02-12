@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tarea.Persistence.Database.Models;
+﻿using MediatR;
 using Tarea.Persistence.Database;
+using Tarea.Persistence.Database.Models;
 using Tarea.Service.EventHandlers.Commands;
-using Microsoft.EntityFrameworkCore;
-using MediatR;
 
 namespace Tarea.Service.EventHandlers.EventHandlers
 {
@@ -23,7 +17,7 @@ namespace Tarea.Service.EventHandlers.EventHandlers
         {
             TareaModel model = new()
             {
-                IdTarea = command.IdTarea
+                IdTarea = Guid.Parse(command.IdTarea)
             };
 
             _context.Tareas.Remove(model);

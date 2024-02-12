@@ -17,11 +17,11 @@ namespace Tarea.Service.EventHandlers.EventHandlers
         {
             TareaModel model = new()
             {
-                IdTarea = command.IdTarea,
+                IdTarea = Guid.Parse(command.IdTarea),
                 Descripcion = command.Descripcion,
                 Finalizada = command.Finalizada,
-                Fecha = command.Fecha,
-                Categoria = command.IdCategoria
+                Fecha = Convert.ToDateTime(command.Fecha),
+                Categoria = Guid.Parse(command.IdCategoria)
             };
 
             _context.Tareas.Update(model);
